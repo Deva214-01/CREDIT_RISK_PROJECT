@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Ledger — Loan Risk Assessment</title>
+  <meta name="description" content="Credit Ledger machine-learning loan risk assessment dashboard">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="background-grid"></div>
+  <div class="ambient-particles" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <div class="scan-line" aria-hidden="true"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Credit Ledger home">
+      <span class="brand-icon"><span></span></span>
+      <span>
+        <strong>Credit Ledger</strong>
+        <small>AI underwriting desk</small>
+      </span>
+    </a>
+
+    <div class="service">
+      <span class="service-dot"></span>
+      <span>MODEL ONLINE</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">CONSUMER CREDIT · ML ASSESSMENT</div>
+        <h1>Know the risk<br><span>before the decision.</span></h1>
+        <p>Enter the applicant profile and run the trained machine-learning model to estimate default risk.</p>
+      </div>
+      <div class="hero-badge"><span class="desk-mark">◌</span><div class="hero-badge-inner">
+        <span>01</span>
+        <small>APPLICATION<br>PROFILE</small></div>
+      </div>
+    </section>
+
+    <form id="riskForm" autocomplete="off">
+      <section class="panel">
+        <div class="panel-title">
+          <div><span>01</span><i>—</i><h2>Applicant details</h2></div>
+          <span class="panel-caption">PERSONAL & EMPLOYMENT</span>
+        </div>
+
+        <div class="field-grid">
+          <label class="field">
+            <span>Age</span>
+            <div class="control"><input id="person_age" type="number" min="18" max="100" value="30" required><em>years</em></div>
+          </label>
+
+          <label class="field">
+            <span>Annual income</span>
+            <div class="control"><b>₹</b><input id="person_income" type="number" min="0" step="1000" value="600000" required></div>
+          </label>
+
+          <label class="field">
+            <span>Home ownership</span>
+            <div class="control select-wrap">
+              <select id="person_home_ownership" required>
+                <option value="RENT">Renting</option>
+                <option value="MORTGAGE">Mortgage</option>
+                <option value="OWN">Own</option>
+                <option value="OTHER">Other</option>
+              </select><span class="arrow"></span>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Employment length</span>
+            <div class="control"><input id="person_emp_length" type="number" min="0" max="60" step="0.1" value="5" required><em>years</em></div>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div><span>02</span><i>—</i><h2>Loan request</h2></div>
+          <span class="panel-caption">CREDIT PROFILE</span>
+        </div>
+
+        <div class="field-grid">
+          <label class="field">
+            <span>Purpose</span>
+            <div class="control select-wrap">
+              <select id="loan_intent" required>
+                <option value="PERSONAL">Personal</option>
+                <option value="EDUCATION">Education</option>
+                <option value="MEDICAL">Medical</option>
+                <option value="VENTURE">Venture</option>
+                <option value="HOMEIMPROVEMENT">Home improvement</option>
+                <option value="DEBTCONSOLIDATION">Debt consolidation</option>
+              </select><span class="arrow"></span>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Loan grade</span>
+            <div class="control select-wrap">
+              <select id="loan_grade" required>
+                <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option>
+              </select><span class="arrow"></span>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Loan amount</span>
+            <div class="control"><b>₹</b><input id="loan_amnt" type="number" min="0" step="1000" value="100000" required></div>
+          </label>
+
+          <label class="field">
+            <span>Interest rate</span>
+            <div class="control"><input id="loan_int_rate" type="number" min="0" max="100" step="0.01" value="11.5" required><em>%</em></div>
+          </label>
+
+          <label class="field">
+            <span>Loan as % of income</span>
+            <div class="control"><input id="loan_percent_income" type="number" min="0" max="10" step="0.001" value="0.17" required><em>ratio</em></div>
+            <small class="hint">Calculated from income and loan amount — edit if you need to override it.</small>
+          </label>
+
+          <label class="field">
+            <span>Prior default on file</span>
+            <div class="control select-wrap">
+              <select id="cb_person_default_on_file" required>
+                <option value="N">No</option><option value="Y">Yes</option>
+              </select><span class="arrow"></span>
+            </div>
+          </label>
+
+          <label class="field full">
+            <span>Credit history length</span>
+            <div class="control"><input id="cb_person_cred_hist_length" type="number" min="0" max="60" value="6" required><em>years</em></div>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="ghost-btn" id="demoBtn">Load demo</button>
+          <button type="button" class="ghost-btn" id="resetBtn">Reset</button>
+          <button type="submit" class="assess-btn" id="assessBtn">
+            <span class="btn-label">Assess risk</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+      </section>
+    </form>
+    <section class="result-panel" id="resultPanel">
+      <div class="result-header">
+        <div>
+          <div class="eyebrow">03 · MODEL OUTPUT</div>
+          <h2>Risk assessment</h2>
+        </div>
+        <span class="result-state"><i class="state-dot"></i><b id="resultState">AWAITING INPUT</b></span>
+      </div>
+
+      <div class="result-content">
+        <div class="gauge-wrap" id="gaugeWrap">
+          <div class="gauge-shadow"></div>
+          <div class="gauge" id="gauge">
+            <div class="gauge-orbit orbit-one"></div>
+            <div class="gauge-orbit orbit-two"></div>
+            <div class="gauge-inner">
+              <span class="shield-icon" id="shieldIcon">✓</span>
+              <strong id="probability">0.0</strong><span class="percent">%</span>
+              <small>default probability</small>
+              <b id="gaugeVerdict">READY</b>
+            </div>
+          </div>
+          <div class="gauge-base"><span></span></div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <span class="metric-icon">◈</span>
+            <div><small>Default probability</small><strong id="probMetric">—</strong></div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">◎</span>
+            <div><small>Decision threshold</small><strong id="thresholdMetric">—</strong></div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-icon">◆</span>
+            <div><small>Model verdict</small><strong id="verdictMetric">Awaiting</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="risk-heading">
+        <span>Risk probability</span>
+        <strong id="riskPercent">0.0% <small>(lower is better)</small></strong>
+      </div>
+
+      <div class="risk-bar">
+        <div class="risk-track">
+          <div id="riskFill"></div>
+          <span id="thresholdPin"></span>
+        </div>
+        <div><span>LOWER RISK</span><span>HIGHER RISK</span></div>
+      </div>
+
+      <div class="model-note">
+        <span>i</span>
+        <p>Figures are model estimates, not a lending decision. The result is generated by the connected FastAPI machine-learning endpoint.</p>
+      </div>
+    </section>
+</main>
+
+  <footer>
+    <span>Credit Ledger AI</span>
+    <span>FastAPI · XGBoost · Interactive Risk Analytics</span>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="/static/script.js"></script>
+</body>
+</html>
